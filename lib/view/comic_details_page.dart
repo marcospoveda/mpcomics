@@ -1,3 +1,4 @@
+import 'package:br/properties/constants.dart';
 import 'package:flutter/material.dart';
 
 class ComicDetailsPage extends StatefulWidget {
@@ -21,13 +22,12 @@ class _ComicDetailsPageState extends State<ComicDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget._comic['title']),
-        backgroundColor: Colors.redAccent[700],
+        title: Text(widget._comic['title'], style: TextStyle(fontSize: 16),),
+        backgroundColor: kDefaultAppBarColor,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {})
         ],
       ),
-      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10.0),
           child: Column(

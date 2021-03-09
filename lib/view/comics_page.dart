@@ -1,8 +1,7 @@
-import 'dart:convert';
-
+import 'package:br/properties/constants.dart';
 import 'package:br/view/comic_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '../infrastructure/comics_repository.dart';
 
 class ComicsPage extends StatefulWidget {
   @override
@@ -12,31 +11,18 @@ class ComicsPage extends StatefulWidget {
 class _ComicsPageState extends State<ComicsPage> {
   int _offset = 0;
 
-  final _key = 'aa10f1df5781f06027a5d298c1886593';
-  final _hash = 'fe496d81fde0adcdfea311d8f625ba2c';
-
-  Future<Map> _getComics() async {
-    http.Response response;
-
-    response = await http.get(
-        'https://gateway.marvel.com:443/v1/public/comics?ts=1&apikey=$_key&hasDigitalIssue=true&offset=$_offset&hash=$_hash');
-
-    return json.decode(response.body);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('HQs'),
-        backgroundColor: Colors.redAccent[700],
+        backgroundColor: kDefaultAppBarColor,
       ),
-      backgroundColor: Colors.black,
       body:  Column(
           children: <Widget>[
             Expanded(
               child: FutureBuilder(
-                  future: _getComics(),
+                  future: ComicsRepository().getComics(_offset),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
@@ -44,7 +30,7 @@ class _ComicsPageState extends State<ComicsPage> {
                       return Container(
                         alignment: Alignment.center,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent[700]),
+                          valueColor: AlwaysStoppedAnimation<Color>(kDefaultAppBarColor),
                           strokeWidth: 5.0,
                         ),
                       );
@@ -116,42 +102,5 @@ class _ComicsPageState extends State<ComicsPage> {
         }
       }
     );
-//    return Center(
-//      child: Column(
-//          crossAxisAlignment: CrossAxisAlignment.center,
-//          children: <Widget>[
-//            Text(snapshot.data['data']['results'][0]['title'],
-//              style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-//            ),
-//            Image.network(snapshot.data['data']['results'][0]['images'][0]['path'] + '.jpg',
-//              height: 300.0,
-//              alignment: Alignment.center,
-//              fit: BoxFit.fitHeight,
-//            ),
-//            Divider(),
-//            Text(snapshot.data['data']['results'][0]['description'],
-//              style: TextStyle(fontSize: 20.0),
-//            ),
-//          ],
-//        ),
-//    );
-//    return GridView.builder(
-//        padding: EdgeInsets.all(10.0),
-//        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//            crossAxisCount: 2,
-//            crossAxisSpacing: 10.0,
-//            mainAxisSpacing: 10.0,
-//        ),
-//        itemCount: 4,
-//        itemBuilder: (context, index) {
-//          return GestureDetector(
-//            child: Image.network(
-//              snapshot.data['data']['results'][index]['images'][0]['path'] +
-//                  '.jpg',
-//              fit: BoxFit.fitHeight,
-//            ),
-//            onTap: () {},
-//          );
-//        });
   }
 }

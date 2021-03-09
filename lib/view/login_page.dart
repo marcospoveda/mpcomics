@@ -1,3 +1,4 @@
+import 'package:br/properties/constants.dart';
 import 'package:br/view/new_user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -11,9 +12,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.redAccent[700],
+        backgroundColor: kDefaultAppBarColor,
         title: Text('Login'),
       ),
       body: SingleChildScrollView(
@@ -21,50 +21,74 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Icon(Icons.account_circle, size: 100.0, color: Colors.amber),
-            Divider(),
+            Icon(Icons.account_circle, size: 100.0, color: kIconsPrimaryColor),
+            SizedBox(height: kDefaultSpaceSize),
             TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.person_outline, color: Colors.amber),
+                prefixIcon: Icon(Icons.person_outline, color: kIconsPrimaryColor),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 hintText: 'Usuário'
               ),
             ),
-            Divider(),
+            SizedBox(height: kDefaultSpaceSize),
             TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.lock_outline, color: Colors.amber),
+                prefixIcon: Icon(Icons.lock_outline, color: kIconsPrimaryColor),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 hintText: 'Senha'
               ),
               obscureText: true,
             ),
-            Divider(),
-            Container(
-              height: 50,
-              child: RaisedButton(
-                color: Colors.redAccent[700],
-                child: Text('Continuar', style: TextStyle(color: Colors.white, fontSize: 20)),
-                onPressed: () {}
+            SizedBox(height: kDefaultSpaceSize),
+            GestureDetector(
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: kButtonPrimaryColor,
+                  borderRadius: BorderRadius.circular(8)
+                ),
+                child: Center(
+                  child: Text(
+                    'Entrar', 
+                    style: TextStyle(
+                      color: kButtonTextColor, 
+                      fontSize: 20
+                    )
+                  ),
+                ),          
               ),
+              onTap: (){},
             ),
-            Divider(),
-            Container(
-              height: 50,
-              child: RaisedButton(
-                  color: Colors.amber,
-                  child: Text('Criar conta', style: TextStyle(color: Colors.white, fontSize: 20)),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NewUserPage())
-                    );
-                  }
+            SizedBox(height: kDefaultSpaceSize),
+            GestureDetector(
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: kButtonSecudaryColor,
+                  border: Border.all(
+                    color: kBorderSecundaryButtonColor
+                  ),
+                  borderRadius: BorderRadius.circular(8)
+                ),
+                child: Center(
+                  child: Text(
+                    'Criar Conta', 
+                    style: TextStyle(
+                      color: kButtonTextColor, 
+                      fontSize: 20
+                    )
+                  ),
+                ),          
               ),
+              onTap: (){
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => NewUserPage())
+                );
+              },
             ),
           ],
         ),
