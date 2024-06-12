@@ -1,4 +1,4 @@
-package poveda.com.br;
+package com.poveda.mpcomics;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;
